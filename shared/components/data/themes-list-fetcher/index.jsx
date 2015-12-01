@@ -62,7 +62,7 @@ const ThemesListFetcher = React.createClass( {
 	},
 
 	componentDidMount: function() {
-		this.refresh();
+		this.refresh( this.props );
 	},
 
 	componentWillReceiveProps: function( nextProps ) {
@@ -71,17 +71,17 @@ const ThemesListFetcher = React.createClass( {
 
 		if ( propKeys.some( key => this.props[ key ] !== nextProps[ key ] ) ) {
 			console.log( 'props changed' );
-			this.refresh();
+			this.refresh( nextProps );
 		}
 	},
 
-	refresh: function() {
+	refresh: function( props ) {
 		if ( this.props.site || this.props.isMultisite ) {
-			this.queryThemes();
+			this.queryThemes( props );
 		}
 	},
 
-	queryThemes: function() {
+	queryThemes: function( props ) {
 		const {
 			onLastPage,
 			site,
@@ -90,7 +90,7 @@ const ThemesListFetcher = React.createClass( {
 
 			query,
 			fetchNextPage
-		} = this.props;
+		} = props;
 
 		this.onLastPage = onLastPage ? once( onLastPage ) : null;
 
